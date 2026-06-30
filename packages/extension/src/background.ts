@@ -5,6 +5,7 @@ const DEFAULT_WS_PORT = 9877;
 let ws: WebSocket | null = null;
 let bridge: DebuggerBridge | null = null;
 let reconnectTimer: number | null = null;
+let heartbeatTimer: number | null = null;
 
 async function getWsPort(): Promise<number> {
   const data = await chrome.storage.local.get("wsPort");
@@ -24,6 +25,7 @@ function connect() {
       await bridge.init();
       updateBadge("connected");
       broadcastStatus("connected");
+      startHeartbeat();
     };
 
     ws.onmessage = async (event) => {
@@ -57,6 +59,7 @@ function connect() {
 
     ws.onclose = () => {
       console.log("[BrowserPilot] Disconnected from MCP server");
+      stopHeartbeat();
       bridge?.dispose();
       bridge = null;
       ws = null;
@@ -77,6 +80,22 @@ function scheduleReconnect() {
     reconnectTimer = null;
     connect();
   }, 3000);
+}
+
+function startHeartbeat() {
+  stopHeartbeat();
+  heartbeatTimer = window.setInterval(() => {
+    if (ws && ws.readyState === WebSocket.OPEN) {
+      ws.send(JSON.stringify({ type: "ping" }));
+    }
+  }, 25000);
+}
+
+function stopHeartbeat() {
+  if (heartbeatTimer) {
+    clearInterval(heartbeatTimer);
+    heartbeatTimer = null;
+  }
 }
 
 function updateBadge(status: "connected" | "disconnected") {
