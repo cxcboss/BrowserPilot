@@ -22,7 +22,7 @@ const server = new McpServer({
 
 interface ToolDef {
   description: string;
-  inputSchema: Record<string, unknown>;
+  schema: Record<string, any>;
   handler: (...args: any[]) => Promise<unknown>;
 }
 
@@ -31,7 +31,7 @@ function registerToolGroup(tools: Record<string, ToolDef>) {
     server.tool(
       name,
       tool.description,
-      tool.inputSchema as any,
+      tool.schema,
       async (args: Record<string, unknown>) => {
         try {
           const result = await tool.handler(args);
