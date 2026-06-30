@@ -16,7 +16,7 @@ AI Assistant ←(Streamable HTTP)→ MCP Server ←(WebSocket)→ Chrome Extensi
 
 - **MCP Server**: Persistent Node.js HTTP service (Streamable HTTP transport)
 - **Chrome Extension**: Connects via WebSocket, controls browser using Chrome DevTools Protocol
-- **Supported AI Tools**: MiMoCode, Claude Desktop, Cursor, Codex, and any MCP-compatible assistant
+- **Supported AI Tools**: MiMoCode, Claude Desktop, Cursor, Codex, WorkBuddy, OpenCode, and any MCP-compatible assistant
 
 ### Quick Start
 
@@ -103,6 +103,18 @@ You'll see:
     "browserpilot": {
       "type": "remote",
       "url": "http://127.0.0.1:9876/mcp"
+    }
+  }
+}
+```
+
+**WorkBuddy** (`~/.workbuddy/mcp.json`):
+```json
+{
+  "mcpServers": {
+    "browserpilot": {
+      "url": "http://127.0.0.1:9876/mcp",
+      "type": "http"
     }
   }
 }
@@ -253,7 +265,7 @@ AI 助手 ←(Streamable HTTP)→ MCP Server ←(WebSocket)→ Chrome Extension 
 
 - **MCP Server**：持久化 Node.js HTTP 服务（Streamable HTTP 传输）
 - **Chrome Extension**：通过 WebSocket 连接，使用 Chrome DevTools Protocol 控制浏览器
-- **支持的 AI 工具**：MiMoCode、Claude Desktop、Cursor、Codex 及所有兼容 MCP 的助手
+- **支持的 AI 工具**：MiMoCode、Claude Desktop、Cursor、Codex、WorkBuddy、OpenCode 及所有兼容 MCP 的助手
 
 ### 快速开始
 
@@ -340,6 +352,18 @@ node packages/server/dist/index.js
     "browserpilot": {
       "type": "remote",
       "url": "http://127.0.0.1:9876/mcp"
+    }
+  }
+}
+```
+
+**WorkBuddy**（`~/.workbuddy/mcp.json`）：
+```json
+{
+  "mcpServers": {
+    "browserpilot": {
+      "url": "http://127.0.0.1:9876/mcp",
+      "type": "http"
     }
   }
 }
