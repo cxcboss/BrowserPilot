@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>BrowserPilot</h1>
+      <span id="status" class="status disconnected">Disconnected</span>
+    </div>
+    <div class="info">
+      <label>WebSocket Port</label>
+      <div class="row">
+        <input id="port" type="number" value="9876" min="1024" max="65535">
+        <button id="save">Save</button>
+      </div>
+    </div>
+    <button id="reconnect" class="btn">Reconnect</button>
+    <div class="footer">
+      <p>MCP Server Config:</p>
+      <pre id="config">{
+  "mcpServers": {
+    "browser": {
+      "command": "npx",
+      "args": ["@browserpilot/mcp-server"]
+    }
+  }
+}</pre>
+    </div>
+  </div>
+  <script src="popup.js" type="module"></script>
+</body>
+</html>

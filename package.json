@@ -1,0 +1,12 @@
+{
+  "name": "browserpilot",
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r build",
+    "build:server": "pnpm --filter @browserpilot/mcp-server build",
+    "build:extension": "pnpm --filter @browserpilot/extension build"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": ["esbuild"]
+  }
+}
