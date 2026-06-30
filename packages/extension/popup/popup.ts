@@ -4,7 +4,7 @@ const saveBtn = document.getElementById("save")!;
 const reconnectBtn = document.getElementById("reconnect")!;
 
 function updateStatus(status: string) {
-  statusEl.textContent = status === "connected" ? "Connected" : "Disconnected";
+  statusEl.textContent = status === "connected" ? "已连接" : "未连接";
   statusEl.className = `status ${status}`;
 }
 

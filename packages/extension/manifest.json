@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "BrowserPilot",
+  "name": "BrowserPilot 浏览器助手",
   "version": "0.1.0",
-  "description": "AI-powered browser control via MCP. Lets AI assistants read, navigate, and interact with your browser.",
+  "description": "通过 MCP 实现 AI 驱动的浏览器控制。让 AI 助手读取、导航和操作你的浏览器。",
   "permissions": [
     "debugger",
     "tabs",
