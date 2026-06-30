@@ -19,7 +19,7 @@ chrome.runtime.onMessage.addListener((msg) => {
 });
 
 chrome.storage.local.get("wsPort", (data) => {
-  portInput.value = String(data.wsPort || 9876);
+  portInput.value = String(data.wsPort || 9877);
 });
 
 saveBtn.addEventListener("click", () => {

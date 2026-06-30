@@ -5,43 +5,75 @@ AI-powered Chrome browser control through MCP. Let any AI assistant read, naviga
 ## Architecture
 
 ```
-AI Assistant ←(stdio)→ MCP Server ←(WebSocket)→ Chrome Extension ←(CDP)→ Browser
+AI Assistant ←(Streamable HTTP)→ MCP Server (persistent) ←(WebSocket)→ Chrome Extension ←(CDP)→ Browser
 ```
 
-- **MCP Server**: Node.js process that speaks the Model Context Protocol over stdio
-- **Chrome Extension**: Connects to the MCP Server via WebSocket, controls the browser using Chrome DevTools Protocol
+- **MCP Server**: Persistent Node.js HTTP service with Streamable HTTP transport
+- **Chrome Extension**: Connects to the MCP Server via WebSocket, controls browser using Chrome DevTools Protocol
 
 ## Quick Start
 
-### 1. Install the MCP Server
+### 1. Start the MCP Server
 
 ```bash
-npm install -g @browserpilot/mcp-server
+npx @browserpilot/server
 ```
 
-Or run directly with npx:
+Or clone and build locally:
 
 ```bash
-npx @browserpilot/mcp-server
+git clone https://github.com/cxcboss/BrowserPilot.git
+cd BrowserPilot
+pnpm install
+pnpm build
+node packages/server/dist/index.js
 ```
+
+The server starts on:
+- HTTP: `http://127.0.0.1:9876/mcp`
+- WebSocket: `ws://127.0.0.1:9877`
 
 ### 2. Load the Chrome Extension
 
 1. Open `chrome://extensions/`
 2. Enable "Developer mode"
-3. Click "Load unpacked" and select the `packages/extension` directory
-4. Click the BrowserPilot icon in the toolbar — it should show "Connected"
+3. Click "Load unpacked" and select `packages/extension/dist`
+4. Click the BrowserPilot icon — it should show "已连接"
 
 ### 3. Configure Your AI Assistant
 
-Add to your MCP config (e.g., `~/.cursor/mcp.json` for Cursor, or Claude Desktop config):
+**MiMoCode** (`~/.config/mimocode/mimocode.json`):
+
+```json
+{
+  "mcp": {
+    "browserpilot": {
+      "type": "remote",
+      "url": "http://127.0.0.1:9876/mcp"
+    }
+  }
+}
+```
+
+**Claude Desktop** (`~/Library/Application Support/Claude/claude_desktop_config.json`):
 
 ```json
 {
   "mcpServers": {
-    "browser": {
-      "command": "npx",
-      "args": ["@browserpilot/mcp-server"]
+    "browserpilot": {
+      "url": "http://127.0.0.1:9876/mcp"
+    }
+  }
+}
+```
+
+**Cursor** (`~/.cursor/mcp.json`):
+
+```json
+{
+  "mcpServers": {
+    "browserpilot": {
+      "url": "http://127.0.0.1:9876/mcp"
     }
   }
 }
@@ -105,12 +137,17 @@ Ask your AI assistant to control your browser:
 
 ## Configuration
 
-### WebSocket Port
+### Ports
 
-Default: `9876`. Change via the extension popup or environment variable:
+| Port | Purpose | Default |
+|------|---------|---------|
+| HTTP | MCP Streamable HTTP endpoint | 9876 |
+| WebSocket | Chrome Extension connection | 9877 |
+
+Change via environment variables:
 
 ```bash
-BROWSERPILOT_WS_PORT=8080 npx @browserpilot/mcp-server
+BROWSERPILOT_HTTP_PORT=8080 BROWSERPILOT_WS_PORT=8081 npx @browserpilot/server
 ```
 
 ## Development
@@ -136,7 +173,7 @@ pnpm build
 
 ## Security
 
-- WebSocket server binds to `127.0.0.1` only — no remote access
+- All servers bind to `127.0.0.1` — no remote access
 - All communication stays on your local machine
 - The extension uses the `debugger` permission to control your real browser
 

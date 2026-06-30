@@ -19,10 +19,7 @@ export class Bridge {
     string,
     { resolve: (v: unknown) => void; reject: (e: Error) => void }
   >();
-  private secret: string;
-
-  constructor(port: number, secret: string) {
-    this.secret = secret;
+  constructor(port: number) {
     this.wss = new WebSocketServer({ port, host: "127.0.0.1" });
 
     this.wss.on("connection", (ws, req) => {

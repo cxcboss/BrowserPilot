@@ -1,6 +1,6 @@
 import { DebuggerBridge } from "./debugger.js";
 
-const DEFAULT_WS_PORT = 9876;
+const DEFAULT_WS_PORT = 9877;
 
 let ws: WebSocket | null = null;
 let bridge: DebuggerBridge | null = null;
@@ -9,10 +9,6 @@ let reconnectTimer: number | null = null;
 async function getWsPort(): Promise<number> {
   const data = await chrome.storage.local.get("wsPort");
   return data.wsPort || DEFAULT_WS_PORT;
-}
-
-function getSecret(): Promise<string> {
-  return chrome.storage.local.get("secret").then((d) => d.secret || "");
 }
 
 function connect() {

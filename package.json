@@ -3,7 +3,7 @@
   "private": true,
   "scripts": {
     "build": "pnpm -r build",
-    "build:server": "pnpm --filter @browserpilot/mcp-server build",
+    "build:server": "pnpm --filter @browserpilot/server build",
     "build:extension": "pnpm --filter @browserpilot/extension build"
   },
   "pnpm": {

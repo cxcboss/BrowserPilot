@@ -13,21 +13,16 @@
     <div class="info">
       <label>WebSocket 端口</label>
       <div class="row">
-        <input id="port" type="number" value="9876" min="1024" max="65535">
+        <input id="port" type="number" value="9877" min="1024" max="65535">
         <button id="save">保存</button>
       </div>
     </div>
     <button id="reconnect" class="btn">重新连接</button>
     <div class="footer">
-      <p>MCP 服务器配置：</p>
-      <pre id="config">{
-  "mcpServers": {
-    "browserpilot": {
-      "command": "node",
-      "args": ["/path/to/packages/mcp-server/dist/index.js"]
-    }
-  }
-}</pre>
+      <p>使用方法：</p>
+      <pre>1. 启动服务：npx @browserpilot/server
+2. 配置 AI 工具（见 README）
+3. 对 AI 说话即可控制浏览器</pre>
     </div>
   </div>
   <script src="popup.js" type="module"></script>

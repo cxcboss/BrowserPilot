@@ -1,20 +1,23 @@
 {
-  "name": "@browserpilot/mcp-server",
-  "version": "0.1.0",
+  "name": "@browserpilot/server",
+  "version": "0.2.0",
   "type": "module",
   "bin": {
-    "browserpilot-mcp": "./dist/index.js"
+    "browserpilot": "./dist/index.js"
   },
   "scripts": {
     "build": "tsup src/index.ts --format esm --dts --clean",
-    "dev": "tsup src/index.ts --format esm --dts --watch"
+    "dev": "tsup src/index.ts --format esm --dts --watch",
+    "start": "node dist/index.js"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.1",
+    "express": "^5.1.0",
     "ws": "^8.18.0",
     "zod": "^3.24.4"
   },
   "devDependencies": {
+    "@types/express": "^5.0.2",
     "@types/node": "^22.15.2",
     "@types/ws": "^8.18.1",
     "tsup": "^8.4.0",
